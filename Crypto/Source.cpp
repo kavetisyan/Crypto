@@ -9,11 +9,43 @@ public:
     virtual string Decrypt(const string& ciphertext) = 0;
 };
 
+class CaesarCypher : public Crypto {
+private:
+    int key;
+    string EncryptDecrypt(const string text, bool encrypt) {
+        if (!encrypt)
+            key = -key;
+        string changedText = "";
+        for (char ch : text) {
+            char base = isupper(ch) ? 'A' : 'a';
+            if (isalpha(ch)) {
+                char encodedChar = ((ch - base + key) % 26) + base;
+                changedText += encodedChar;
+            }
+            else {
+                changedText += ch;
+            }
+        }
+        return changedText;
+    }
+
+public:
+    CaesarCypher(int cipherKey) : key(cipherKey) {}
+
+    string Encrypt(const string& input) {
+        return EncryptDecrypt(input, true);
+    }
+
+    string Decrypt(const string& input) {
+        return EncryptDecrypt(input, false);
+    }
+};
+
 class SimpleSubstitution : public Crypto {
 private:
     string substitutionKey;
 
-    string EncryptDecrypt(const string& text, bool encrypt) {
+    string EncryptDecrypt(const string text, bool encrypt) {
         string changedText = text;
         for (char& ch : changedText) {
             if (isalpha(ch)) {
@@ -55,7 +87,7 @@ public:
                 count++;
             }
             else {
-                encoded += plaintext[i - 1] + std::to_string(count);
+                encoded += plaintext[i - 1] + to_string(count);
                 count = 1;
             }
         }
@@ -63,7 +95,7 @@ public:
     }
 
     string Decrypt(const string& ciphertext) override {
-        std::string decoded;
+        string decoded;
         for (int i = 0; i < ciphertext.size(); i += 2) {
             char character = ciphertext[i];
             int count = ciphertext[i + 1] - '0';
@@ -78,6 +110,8 @@ public:
 class EuclideanAlgorithms {
 public:
     int getDivisorWithSubtraction(int a, int b) {
+        a = a < 0 ? -a : a;
+        b = b < 0 ? -b : b;
         while (a != b) {
             if (a > b) {
                 a -= b;
@@ -89,6 +123,8 @@ public:
         return a;
     }
     int getDivisorWithDivision(int a, int b) {
+        a = a < 0 ? -a : a;
+        b = b < 0 ? -b : b;
         while (b != 0) {
             int temp = b;
             b = a % b;
@@ -127,7 +163,7 @@ void printMatrix(const vector<vector<int>>& matrix) {
     }
 }
 
-int findMissingNumber(std::vector<int>& numbers) {
+int findMissingNumber(vector<int>& numbers) {
     int n = numbers.size() + 1;
     int totalSum = (n * (n + 1)) / 2;
     int arraySum = 0;
@@ -138,18 +174,18 @@ int findMissingNumber(std::vector<int>& numbers) {
     return missingNumber;
 }
 
-void printArray(const std::vector<int>& array) {
+void printArray(const vector<int>& array) {
     for (const int& num : array) {
-        std::cout << num << " ";
+        cout << num << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 int main() {
     string substitutionKey = "XAZYBCEDFGKWRHLMNOPQJSTUVI";
     SimpleSubstitution crypto(substitutionKey);
 
-    string plaintext = "Hello, World!9";
+    string plaintext = "Hello, World!";
     string ciphertext = crypto.Encrypt(plaintext);
     string decryptedText = crypto.Decrypt(ciphertext);
 
@@ -168,6 +204,17 @@ int main() {
     cout << "Decrypted Text with RLE: " << decryptedText << endl;
     cout << endl;
 
+    int caesarKey = 3;
+    CaesarCypher caesarCypher(caesarKey);
+    plaintext = "Hello";
+    ciphertext = caesarCypher.Encrypt(plaintext);
+    decryptedText = caesarCypher.Decrypt(ciphertext);
+
+    cout << "Plaintext: " << plaintext << endl;
+    cout << "Ciphertext with Caesar Cypher: " << ciphertext << endl;
+    cout << "Decrypted Text with Caesar Cypher: " << decryptedText << endl;
+    cout << endl;
+
     vector<vector<int>> original = { {1, 1, 0}, {1, 0, 0}, {0, 1, 1} };
     cout << "Original Matrix:" << endl;
     printMatrix(original);
@@ -184,16 +231,16 @@ int main() {
 
     int num1, num2;
     EuclideanAlgorithms ea;
-    std::cout << "Enter two numbers: ";
-    std::cin >> num1 >> num2;
+    cout << "Enter two numbers: ";
+    cin >> num1 >> num2;
 
     int divisor1 = ea.getDivisorWithSubtraction(num1, num2);
     int divisor2 = ea.getDivisorWithDivision(num1, num2);
     int multiple = ea.getSmallestMultiple(num1, num2);
 
-    std::cout << "Greatest Divisor With Subtraction: " << divisor1 << std::endl;
-    std::cout << "Greatest Divisor With Division: " << divisor2 << std::endl;
-    std::cout << "Smallest Multiple: " << multiple << std::endl;
+    cout << "Greatest Divisor With Subtraction: " << divisor1 << endl;
+    cout << "Greatest Divisor With Division: " << divisor2 << endl;
+    cout << "Smallest Multiple: " << multiple << endl;
     
 
     return 0;
