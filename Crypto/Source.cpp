@@ -9,6 +9,49 @@ public:
     virtual string Decrypt(const string& ciphertext) = 0;
 };
 
+class Vigenere : public Crypto {
+private:
+    string key;
+public:
+    Vigenere(string key) : key(key) {}
+    string Encrypt(const string& text) {
+        string newText = "";
+        for (int i = 0; i < text.length(); ++i) {
+            char letter = text[i];
+            char keyLetter = key[i % key.length()];
+            if (isalpha(letter)) {
+                char newLetter = 'A' + (toupper(letter) + toupper(keyLetter) - 2 * 'A') % 26;
+                if (islower(letter)) {
+                    newLetter = tolower(newLetter);
+                }
+                newText += newLetter;
+            }
+            else {
+                newText += letter;
+            }
+        }
+        return newText;
+    }
+    string Decrypt(const string& text) {
+        string newText = "";
+        for (int i = 0; i < text.length(); ++i) {
+            char letter = text[i];
+            char keyLetter = key[i % key.length()];
+            if (isalpha(letter)) {
+                char newChar = 'A' + (toupper(letter) - toupper(keyLetter) + 26) % 26;
+                if (islower(letter)) {
+                    newChar = tolower(newChar);
+                }
+                newText += newChar;
+            }
+            else {
+                newText += letter;
+            }
+        }
+        return newText;
+    }
+};
+
 class CaesarCypher : public Crypto {
 private:
     int key;
@@ -182,6 +225,7 @@ void printArray(const vector<int>& array) {
 }
 
 int main() {
+    #pragma region SimpleSubstitution
     string substitutionKey = "XAZYBCEDFGKWRHLMNOPQJSTUVI";
     SimpleSubstitution crypto(substitutionKey);
 
@@ -193,7 +237,9 @@ int main() {
     cout << "Ciphertext with Simple Substitution: " << ciphertext << endl;
     cout << "Decrypted Text with Simple Substitution: " << decryptedText << endl;
     cout << endl;
+    #pragma endregion
 
+    #pragma region RLE
     RLE rleCrypto;
     plaintext = "1110011110001";
     ciphertext = rleCrypto.Encrypt(plaintext);
@@ -203,7 +249,9 @@ int main() {
     cout << "Ciphertext with RLE: " << ciphertext << endl;
     cout << "Decrypted Text with RLE: " << decryptedText << endl;
     cout << endl;
+    #pragma endregion
 
+    #pragma region CaesarCypher
     int caesarKey = 3;
     CaesarCypher caesarCypher(caesarKey);
     plaintext = "Hello";
@@ -214,7 +262,22 @@ int main() {
     cout << "Ciphertext with Caesar Cypher: " << ciphertext << endl;
     cout << "Decrypted Text with Caesar Cypher: " << decryptedText << endl;
     cout << endl;
+    #pragma endregion
 
+    #pragma region Vigenere
+    string vigenerKey = "vigenere";
+    Vigenere vigenereCypher(vigenerKey);
+    plaintext = "Hello World!";
+    ciphertext = vigenereCypher.Encrypt(plaintext);
+    decryptedText = vigenereCypher.Decrypt(ciphertext);
+   
+    cout << "Plaintext: " << plaintext << endl;
+    cout << "Ciphertext with Vigenere Cypher: " << ciphertext << endl;
+    cout << "Decrypted Text with Vigenere Cypher: " << decryptedText << endl;
+    cout << endl;
+    #pragma endregion
+
+    #pragma region TransposeMatrix
     vector<vector<int>> original = { {1, 1, 0}, {1, 0, 0}, {0, 1, 1} };
     cout << "Original Matrix:" << endl;
     printMatrix(original);
@@ -223,12 +286,16 @@ int main() {
     cout << "\nTransposed Matrix:" << endl;
     printMatrix(transposed);
     cout << endl;
+    #pragma endregion
 
+    #pragma region FindMissingNumber
     vector<int> array = { 5, 2, 8, 4, 9, 1, 3, 6 };
     printArray(array);
     cout << "Missing number in array: " << findMissingNumber(array) << endl;
     cout << endl;
+    #pragma endregion
 
+    #pragma region EuclideanAlgorithms
     int num1, num2;
     EuclideanAlgorithms ea;
     cout << "Enter two numbers: ";
@@ -241,7 +308,6 @@ int main() {
     cout << "Greatest Divisor With Subtraction: " << divisor1 << endl;
     cout << "Greatest Divisor With Division: " << divisor2 << endl;
     cout << "Smallest Multiple: " << multiple << endl;
-    
-
+    #pragma endregion
     return 0;
 }
