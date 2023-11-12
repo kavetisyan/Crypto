@@ -9,11 +9,39 @@ public:
     virtual string Decrypt(const string& ciphertext) = 0;
 };
 
+class VigenereModificated : public Crypto {
+private:
+    string key;
+    VigenereModificated() = delete;
+public:
+    VigenereModificated(string key) : key(key) {}
+    ~VigenereModificated() {}
+    string Encrypt(const string& text) {
+        string newText = "";
+        for (int i = 0; i < text.length(); ++i) {
+            char letter = text[i];
+            char keyLetter = key[i % key.length()];
+            newText += (letter + keyLetter) % 256;
+        }
+        return newText;
+    }
+    string Decrypt(const string& text) {
+        string newText = "";
+        for (int i = 0; i < text.length(); ++i) {
+            char letter = text[i];
+            char keyLetter = key[i % key.length()];
+            newText += (letter - keyLetter + 256) % 256;
+        }
+        return newText;
+    }
+};
+
 class Vigenere : public Crypto {
 private:
     string key;
 public:
     Vigenere(string key) : key(key) {}
+    ~Vigenere() {}
     string Encrypt(const string& text) {
         string newText = "";
         for (int i = 0; i < text.length(); ++i) {
@@ -74,6 +102,7 @@ private:
 
 public:
     CaesarCypher(int cipherKey) : key(cipherKey) {}
+    ~CaesarCypher() {}
 
     string Encrypt(const string& input) {
         return EncryptDecrypt(input, true);
@@ -110,6 +139,7 @@ private:
 
 public:
     SimpleSubstitution(const string& key) : substitutionKey(key) {}
+    ~SimpleSubstitution() {}
 
     string Encrypt(const string& plaintext) override {
         return EncryptDecrypt(plaintext, true);
@@ -274,6 +304,19 @@ int main() {
     cout << "Plaintext: " << plaintext << endl;
     cout << "Ciphertext with Vigenere Cypher: " << ciphertext << endl;
     cout << "Decrypted Text with Vigenere Cypher: " << decryptedText << endl;
+    cout << endl;
+    #pragma endregion
+
+    #pragma region VigenereModificated
+    string vigenerModificatedKey = "A";
+    VigenereModificated vigenereModificatedCypher(vigenerModificatedKey);
+    plaintext = "Hello World!";
+    ciphertext = vigenereModificatedCypher.Encrypt(plaintext);
+    decryptedText = vigenereModificatedCypher.Decrypt(ciphertext);
+
+    cout << "Plaintext: " << plaintext << endl;
+    cout << "Ciphertext with Vigenere Modificated Cypher: " << ciphertext << endl;
+    cout << "Decrypted Text with Vigenere Modificated Cypher: " << decryptedText << endl;
     cout << endl;
     #pragma endregion
 
