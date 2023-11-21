@@ -18,5 +18,28 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Crypto.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VigenereModificated.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vigenere.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CaesarCypher.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RLE.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSubstitution.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EuclideanAlgorithms.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

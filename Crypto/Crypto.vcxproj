@@ -139,7 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Crypto.h" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CaesarCypher.h" />
+    <ClInclude Include="EuclideanAlgorithms.h" />
+    <ClInclude Include="RLE.h" />
+    <ClInclude Include="SimpleSubstitution.h" />
+    <ClInclude Include="Vigenere.h" />
+    <ClInclude Include="VigenereModificated.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
