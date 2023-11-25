@@ -8,6 +8,7 @@
 #include "SimpleSubstitution.h"
 #include "RLE.h"
 #include "EuclideanAlgorithms.h"
+#include "Huffman.h"
 using namespace std;
 
 vector<vector<int>> transposeMatrix(const vector<vector<int>>& input) {
@@ -112,6 +113,18 @@ int main() {
     cout << "Plaintext: " << plaintext << endl;
     cout << "Ciphertext with Vigenere Modificated Cypher: " << ciphertext << endl;
     cout << "Decrypted Text with Vigenere Modificated Cypher: " << decryptedText << endl;
+    cout << endl;
+    #pragma endregion
+
+    #pragma region Huffman
+    Huffman huffman;
+    plaintext = "Hello World!";
+    ciphertext = huffman.Encrypt(plaintext);
+    decryptedText = huffman.Decrypt(ciphertext);
+
+    cout << "Plaintext: " << plaintext << endl;
+    cout << "Ciphertext with Huffman Cypher: " << ciphertext << endl;
+    cout << "Decrypted Text with Huffman Cypher: " << decryptedText << endl;
     cout << endl;
     #pragma endregion
 

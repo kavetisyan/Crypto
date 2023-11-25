@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="CaesarCypher.h" />
     <ClInclude Include="EuclideanAlgorithms.h" />
+    <ClInclude Include="Huffman.h" />
     <ClInclude Include="RLE.h" />
     <ClInclude Include="SimpleSubstitution.h" />
     <ClInclude Include="Vigenere.h" />
