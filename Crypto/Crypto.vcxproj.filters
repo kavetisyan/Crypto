@@ -44,5 +44,8 @@
     <ClInclude Include="Huffman.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Feistel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

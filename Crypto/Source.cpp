@@ -9,6 +9,7 @@
 #include "RLE.h"
 #include "EuclideanAlgorithms.h"
 #include "Huffman.h"
+#include "Feistel.h"
 using namespace std;
 
 vector<vector<int>> transposeMatrix(const vector<vector<int>>& input) {
@@ -125,6 +126,19 @@ int main() {
     cout << "Plaintext: " << plaintext << endl;
     cout << "Ciphertext with Huffman Cypher: " << ciphertext << endl;
     cout << "Decrypted Text with Huffman Cypher: " << decryptedText << endl;
+    cout << endl;
+    #pragma endregion
+
+    #pragma region Feistel
+    string key = "secret";
+    Feistel feistel(key);
+    plaintext = "Hello World!";
+    ciphertext = feistel.Encrypt(plaintext);
+    decryptedText = feistel.Decrypt(ciphertext);
+
+    cout << "Plaintext: " << plaintext << endl;
+    cout << "Ciphertext with Feistel Cypher: " << ciphertext << endl;
+    cout << "Decrypted Text with Feistel Cypher: " << decryptedText << endl;
     cout << endl;
     #pragma endregion
 
